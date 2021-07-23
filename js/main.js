@@ -6,10 +6,34 @@ const editor = grapesjs.init({
   },
   styleManager: {
     appendTo: "#styles-container",
+    sectors: [
+      {
+        name: "Dimension",
+        open: false,
+        buildProps: ["width", "min-height", "padding"],
+        properties: [
+          {
+            type: "integer",
+            name: "The width",
+            property: "width",
+            units: ["px", "%", "rem"],
+            defaults: "auto",
+            min: 0,
+          },
+        ],
+      },
+    ],
   },
   layerManager: {
     appendTo: "#layers-container",
   },
+  traitManager: {
+    appendTo: "#trait-container",
+  },
+  selectorManager: {
+    appendTo: "#styles-container",
+  },
+
   panels: {
     defaults: [
       {
@@ -20,7 +44,7 @@ const editor = grapesjs.init({
             id: "visibility",
             active: true, // active by default
             className: "btn-toggle-borders",
-            label: '<i class="bi bi-border"></i>',
+            label: '<i class="fa fa-clone"></i>',
             command: "sw-visibility", // Built-in command
           },
         ],
@@ -31,14 +55,14 @@ const editor = grapesjs.init({
         buttons: [
           {
             id: "device-desktop",
-            label: '<i class="bi bi-laptop"></i>',
+            label: '<i class="fa fa-television"></i>',
             command: "set-device-desktop",
             active: true,
             togglable: false,
           },
           {
             id: "device-mobile",
-            label: '<i class="bi bi-phone"></i>',
+            label: '<i class="fa fa-mobile"></i>',
             command: "set-device-mobile",
             togglable: false,
           },
@@ -63,4 +87,16 @@ const editor = grapesjs.init({
   pluginsOpts: {
     "gjs-blocks-basic": {},
   },
+});
+
+/**
+ * Add command to Switch  the View Foe Desktop/Large Screen
+ */
+
+editor.Commands.add("set-device-desktop", {
+  run: (editor) => editor.setDevice("Desktop"),
+});
+
+editor.Commands.add("set-device-mobile", {
+  run: (editor) => editor.setDevice("Mobile"),
 });
